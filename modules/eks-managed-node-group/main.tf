@@ -377,6 +377,14 @@ locals {
   launch_template_version = coalesce(var.launch_template_version, try(aws_launch_template.this[0].default_version, "$Default"))
 }
 
+variable "node_group_depends_on" {
+  # the value doesn't matter; we're just using this variable
+  # to propagate dependencies.
+  type    = any
+  default = []
+}
+
+
 resource "aws_eks_node_group" "this" {
   count = var.create ? 1 : 0
 
@@ -460,6 +468,7 @@ resource "aws_eks_node_group" "this" {
     var.tags,
     { Name = var.name }
   )
+  depends_on = [var.node_group_depends_on]
 }
 
 ################################################################################
