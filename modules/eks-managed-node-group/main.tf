@@ -381,7 +381,7 @@ variable "node_group_depends_on" {
   # the value doesn't matter; we're just using this variable
   # to propagate dependencies.
   type    = any
-  default = [module.calico]
+  default = []
 }
 
 
@@ -468,7 +468,7 @@ resource "aws_eks_node_group" "this" {
     var.tags,
     { Name = var.name }
   )
-  depends_on = [var.node_group_depends_on]
+  depends_on = [module.calico]
 }
 
 ################################################################################
